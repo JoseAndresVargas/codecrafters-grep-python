@@ -7,10 +7,14 @@ import sys
 def match_pattern(input_line, pattern):
     if len(pattern) == 1:
         return pattern in input_line
-    elif pattern == "\d":
+    elif pattern == "\d": # Return True if numeric
         return any(char.isnumeric() for char in input_line)
-    elif pattern == "\w":
+    elif pattern == "\w": # Return True if alphanumeric or _
         return any((char.isalnum() or char == "_") for char in input_line)
+    elif pattern.startswith("["): # Return True if character inside brackets matches
+        pattern_no_brack = pattern.strip("[]")
+        pattern_list = list(pattern_no_brack)
+        return any(char in pattern_list for char in input_line)
     else:
         raise RuntimeError(f"Unhandled pattern: {pattern}")
 
